@@ -3,11 +3,13 @@
 <form class="example-form" [formGroup]="invoiceForm">
   <mat-form-field appearance="fill">
     <mat-label>Memo</mat-label>
-    <input matInput name="memo" formControlName="memo">
+    <input matInput required name="memo" formControlName="memo">
+    <mat-error>Memo is required</mat-error>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Total</mat-label>
-    <input matInput name="total" formControlName="total">
+    <input matInput required name="total" formControlName="total">
+    <mat-error>Total is required</mat-error>
   </mat-form-field>
   <h4>Line Items</h4>
   <mat-form-field appearance="fill">

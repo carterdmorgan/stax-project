@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,26 @@ export class AppComponent {
   title = 'stax-project';
   details = "details";
   invoiceForm = new FormGroup({
-    memo: new FormControl(''),
+    memo: new FormControl('', [
+      Validators.required
+    ]),
+    total: new FormControl('', [
+      Validators.required
+    ]),
     details: new FormControl(''),
     quantity: new FormControl(''),
-    price: new FormControl(''),
-    total: new FormControl(''),
+    price: new FormControl('')
   });
 
   test() {
     this.invoiceForm.get('details').setValue('Carter is testing');
+  }
+
+  submit() {
+    if (this.invoiceForm.valid) {
+      console.log('valid')
+    } else {
+      console.log('invalid')
+    }
   }
 }

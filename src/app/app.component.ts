@@ -73,8 +73,6 @@ export class AppComponent {
         }
       };
 
-      console.log(body);
-
       this.invoiceService.publishInvoice(body).subscribe(
         res => {
           this.snackBar.open('Invoice created successfully', 'Dismiss', {

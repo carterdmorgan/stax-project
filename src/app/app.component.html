@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <h2>Invoice Form</h2>
-<form class="example-form" [formGroup]="invoiceForm">
+<form class="example-form" [formGroup]="invoiceForm" (keyup.enter)="submit()">
   <mat-form-field appearance="fill">
     <mat-label>Memo</mat-label>
     <input matInput required name="memo" formControlName="memo">
@@ -25,6 +25,11 @@
     <textarea matInput name="details" formControlName="details"></textarea>
   </mat-form-field>
 </form>
-<button (click)="test()">Test</button>
+<button
+  mat-raised-button color="primary"
+  [disabled]="invoiceForm.invalid"
+  (click)="submit()">
+  Submit
+</button>
 
 <router-outlet></router-outlet>

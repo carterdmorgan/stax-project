@@ -21,6 +21,26 @@ export class AppComponent {
     price: new FormControl('')
   });
 
+  get memoFormControl() {
+    return this.invoiceForm.get('memo');
+  }
+
+  get totalFormControl() {
+    return this.invoiceForm.get('total');
+  }
+
+  get detailsFormControl() {
+    return this.invoiceForm.get('details');
+  }
+
+  get quantityFormControl() {
+    return this.invoiceForm.get('quantity');
+  }
+
+  get priceFormControl() {
+    return this.invoiceForm.get('price');
+  }
+
   test() {
     this.invoiceForm.get('details').setValue('Carter is testing');
   }

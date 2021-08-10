@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { InvoiceService } from 'src/core/services/invoice.service';
 
 @Component({
@@ -8,6 +9,9 @@ import { InvoiceService } from 'src/core/services/invoice.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  private defaultUrl = 'https://omni.fattmerchant.com/#/bill/';
+  private snackBarDuration = 3000;
+
   title = 'stax-project';
   details = "details";
   invoiceForm = new FormGroup({
@@ -43,7 +47,8 @@ export class AppComponent {
   }
 
   constructor(
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    private snackBar: MatSnackBar
   ) {}
 
   submit() {
@@ -58,6 +63,7 @@ export class AppComponent {
       if (price) lineItems['price'] = details;
 
       let body = {
+        url: this.defaultUrl,
         total: this.totalFormControl.value,
         memo: this.memoFormControl.value,
         meta: {
@@ -67,12 +73,22 @@ export class AppComponent {
         }
       };
 
+      console.log(body);
+
       this.invoiceService.publishInvoice(body).subscribe(
         res => {
-          console.log('success', res)
+          this.snackBar.open('Invoice created successfully', 'Dismiss', {
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            duration: this.snackBarDuration
+          });
         },
         err => {
-          console.log('err', err)
+          this.snackBar.open('Error creating invoice', 'Dismiss', {
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            duration: this.snackBarDuration
+          });
         }
       );
     };

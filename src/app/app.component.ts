@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { InvoiceService } from 'src/core/services/invoice.service';
 
 @Component({
   selector: 'app-root',
@@ -41,15 +42,39 @@ export class AppComponent {
     return this.invoiceForm.get('price');
   }
 
-  test() {
-    this.invoiceForm.get('details').setValue('Carter is testing');
-  }
+  constructor(
+    private invoiceService: InvoiceService
+  ) {}
 
   submit() {
     if (this.invoiceForm.valid) {
-      console.log('valid')
-    } else {
-      console.log('invalid')
-    }
+      const details = this.detailsFormControl.value;
+      const quantity = this.quantityFormControl.value;
+      const price = this.priceFormControl.value;
+
+      let lineItems =  {};
+      if (details) lineItems['details'] = details;
+      if (quantity) lineItems['quantity'] = details;
+      if (price) lineItems['price'] = details;
+
+      let body = {
+        total: this.totalFormControl.value,
+        memo: this.memoFormControl.value,
+        meta: {
+          lineItems: [
+            lineItems
+          ]
+        }
+      };
+
+      this.invoiceService.publishInvoice(body).subscribe(
+        res => {
+          console.log('success', res)
+        },
+        err => {
+          console.log('err', err)
+        }
+      );
+    };
   }
 }

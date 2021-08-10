@@ -1,4 +1,9 @@
-.example-form {
+body {
+  background-color: #fafafa;
+}
+
+.invoice-form {
+  margin: 10px;
   width: 400px;
 
   & mat-form-field {
